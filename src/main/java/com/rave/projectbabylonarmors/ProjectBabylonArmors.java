@@ -3,6 +3,7 @@ package com.rave.projectbabylonarmors;
 import com.mojang.logging.LogUtils;
 import com.rave.projectbabylonarmors.init.PBArmorItems;
 import com.rave.projectbabylonarmors.init.PBCreativeTabs;
+import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +21,7 @@ public class ProjectBabylonArmors {
 
         PBArmorItems.ITEMS.register(modBus);
         PBCreativeTabs.TABS.register(modBus);
+        forgeBus.register(ArmorSetBonusManager.class);
 
     }
 }

@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public abstract class DragonsteelRogueArmor extends ArmorItem {
+public abstract class DragonsteelRogueArmor extends ProjectBabylonArmorItem {
 
     private static final ArmorMaterial MATERIAL = new ArmorMaterial() {
         @Override
@@ -70,9 +70,18 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
             return 0f;
         }
     };
-
     public DragonsteelRogueArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+                return DragonsteelRogueArmor.buildArmorModel(slot, defaultModel);
+            }
+        });
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -84,7 +93,7 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
                     .bakeLayer(DragonsteelRogueHelmet.LAYER_LOCATION));
             HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
                     Map.of(
-                            "head", model.Hood,
+                            "head", model.Head,
                             "hat", empty,
                             "body", empty,
                             "right_arm", empty,
@@ -161,18 +170,8 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
         }
 
         @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return DragonsteelRogueArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
-        }
-
-        @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/dragonsteel_assasin_hood.png";
+            return "project_babylon_armors:textures/entities/dragonsteel_rogue_helmet.png";
         }
 
     }
@@ -181,17 +180,6 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
 
         public Chestplate() {
             super(ArmorItem.Type.CHESTPLATE, new Item.Properties());
-        }
-
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return DragonsteelRogueArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
         }
 
         @Override
@@ -208,17 +196,6 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
         }
 
         @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return DragonsteelRogueArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
-        }
-
-        @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "project_babylon_armors:textures/entities/dragonsteel_assasin_leggings.png";
         }
@@ -232,17 +209,6 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
         }
 
         @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return DragonsteelRogueArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
-        }
-
-        @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "project_babylon_armors:textures/entities/dragonsteel_assasin_boots.png";
         }
@@ -250,6 +216,5 @@ public abstract class DragonsteelRogueArmor extends ArmorItem {
     }
 
 }
-
 
 

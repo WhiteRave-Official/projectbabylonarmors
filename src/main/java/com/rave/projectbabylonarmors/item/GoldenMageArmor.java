@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public abstract class GoldenMageArmor extends ArmorItem {
+public abstract class GoldenMageArmor extends ProjectBabylonArmorItem {
 
     private static final ArmorMaterial MATERIAL = new ArmorMaterial() {
         @Override
@@ -70,9 +70,18 @@ public abstract class GoldenMageArmor extends ArmorItem {
             return 0f;
         }
     };
-
     public GoldenMageArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+                return GoldenMageArmor.buildArmorModel(slot, defaultModel);
+            }
+        });
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -161,16 +170,6 @@ public abstract class GoldenMageArmor extends ArmorItem {
         }
 
         @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return GoldenMageArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
-        }
-
-        @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "project_babylon_armors:textures/entities/golden_mage_hood.png";
         }
@@ -181,17 +180,6 @@ public abstract class GoldenMageArmor extends ArmorItem {
 
         public Chestplate() {
             super(ArmorItem.Type.CHESTPLATE, new Item.Properties());
-        }
-
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return GoldenMageArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
         }
 
         @Override
@@ -208,17 +196,6 @@ public abstract class GoldenMageArmor extends ArmorItem {
         }
 
         @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return GoldenMageArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
-        }
-
-        @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "project_babylon_armors:textures/entities/golden_mage_leggings.png";
         }
@@ -229,17 +206,6 @@ public abstract class GoldenMageArmor extends ArmorItem {
 
         public Boots() {
             super(ArmorItem.Type.BOOTS, new Item.Properties());
-        }
-
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
-                @Override
-                @OnlyIn(Dist.CLIENT)
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    return GoldenMageArmor.buildArmorModel(slot, defaultModel);
-                }
-            });
         }
 
         @Override
