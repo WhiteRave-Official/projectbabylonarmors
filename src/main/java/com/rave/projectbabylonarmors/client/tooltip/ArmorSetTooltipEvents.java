@@ -2,11 +2,14 @@ package com.rave.projectbabylonarmors.client.tooltip;
 
 import com.mojang.datafixers.util.Either;
 import com.rave.projectbabylonarmors.setbonus.ArmorPieceTooltipData;
+import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusTooltipData;
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
 import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusManager;
 import com.rave.projectbabylonarmors.setbonus.ArmorSetTooltipData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
@@ -46,11 +49,18 @@ public final class ArmorSetTooltipEvents {
 
             String line = element.left().get().getString();
             ArmorSetTooltipData.ArmorPieceEntry piece = findArmorPieceForLine(data, line);
-            if (piece == null) {
+            if (piece != null) {
+                elements.set(i, Either.right(new ArmorPieceTooltipData(piece.stack(), piece.label(), piece.equipped())));
                 continue;
             }
 
-            elements.set(i, Either.right(new ArmorPieceTooltipData(piece.stack(), piece.label(), piece.equipped())));
+            ArmorSetTooltipData.BonusEntry bonus = findBonusForLine(data, line);
+            if (bonus != null) {
+                Component label = bonus.type().getTitle().copy().withStyle(ChatFormatting.GOLD)
+                        .append(Component.literal(": ").withStyle(ChatFormatting.GOLD))
+                        .append(bonus.displayName().copy().withStyle(ChatFormatting.AQUA));
+                elements.set(i, Either.right(new ArmorSetBonusTooltipData(label, bonus.frameTexture(), bonus.iconTexture())));
+            }
         }
     }
 
@@ -64,6 +74,7 @@ public final class ArmorSetTooltipEvents {
         public static void onRegisterTooltipFactories(RegisterClientTooltipComponentFactoriesEvent event) {
             event.register(ArmorSetTooltipData.class, ArmorSetClientTooltip::new);
             event.register(ArmorPieceTooltipData.class, ArmorPieceClientTooltip::new);
+            event.register(ArmorSetBonusTooltipData.class, ArmorSetBonusClientTooltip::new);
         }
     }
 
@@ -79,6 +90,16 @@ public final class ArmorSetTooltipEvents {
         }
         if (line.contains("Boots:")) {
             return data.armorPieces().get(3);
+        }
+        return null;
+    }
+
+    private static ArmorSetTooltipData.BonusEntry findBonusForLine(ArmorSetTooltipData data, String line) {
+        for (ArmorSetTooltipData.BonusEntry bonus : data.bonuses()) {
+            String title = bonus.type().getTitle().getString() + ":";
+            if (line.contains(title) && line.contains(bonus.displayName().getString())) {
+                return bonus;
+            }
         }
         return null;
     }

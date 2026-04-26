@@ -17,7 +17,8 @@ public record ArmorSetTooltipData(
     public record ArmorPieceEntry(ItemStack stack, Component label, boolean equipped) {
     }
 
-    public record BonusEntry(ArmorSetBonusType type, Component displayName, ResourceLocation iconTexture,
+    public record BonusEntry(ArmorSetBonusType type, Component displayName, ResourceLocation frameTexture,
+                             ResourceLocation iconTexture,
                              List<Component> descriptionLines) {
     }
 }

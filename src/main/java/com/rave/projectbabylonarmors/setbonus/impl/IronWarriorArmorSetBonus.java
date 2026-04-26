@@ -28,12 +28,17 @@ public class IronWarriorArmorSetBonus implements ArmorSetBonus {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Iron Knight");
+        return Component.translatable("tooltip.project_babylon_armors.bonus.iron_knight.name");
+    }
+
+    @Override
+    public ResourceLocation getFrameTexture() {
+        return ResourceLocation.fromNamespaceAndPath(ProjectBabylonArmors.MODID, "textures/gui/tooltip/frame/class/warrior_class_frame.png");
     }
 
     @Override
     public ResourceLocation getIconTexture() {
-        return ResourceLocation.fromNamespaceAndPath(ProjectBabylonArmors.MODID, "textures/gui/set_bonus/class/iron_knight.png");
+        return ResourceLocation.fromNamespaceAndPath(ProjectBabylonArmors.MODID, "textures/gui/tooltip/icon/class/warrior_class_icon.png");
     }
 
     @Override
@@ -61,8 +66,8 @@ public class IronWarriorArmorSetBonus implements ArmorSetBonus {
     @Override
     public List<Component> getTooltipLines() {
         return List.of(
-                Component.literal("      +10% damage").withStyle(ChatFormatting.BLUE),
-                Component.literal("      +10% max health").withStyle(ChatFormatting.BLUE)
+                Component.translatable("tooltip.project_babylon_armors.bonus.iron_knight.damage").withStyle(ChatFormatting.BLUE),
+                Component.translatable("tooltip.project_babylon_armors.bonus.iron_knight.health").withStyle(ChatFormatting.BLUE)
         );
     }
 

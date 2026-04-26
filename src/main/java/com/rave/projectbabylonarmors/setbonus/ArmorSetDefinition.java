@@ -8,12 +8,13 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ArmorSetDefinition {
 
     private final String id;
-    private final String displayName;
+    private final String displayNameKey;
     private final Supplier<Item> helmet;
     private final Supplier<Item> chestplate;
     private final Supplier<Item> leggings;
@@ -22,10 +23,10 @@ public class ArmorSetDefinition {
     private final List<ArmorSetBonus> classBonuses;
     private final List<ArmorSetBonus> allBonuses;
 
-    public ArmorSetDefinition(String id, String displayName, Supplier<Item> helmet, Supplier<Item> chestplate, Supplier<Item> leggings,
+    private ArmorSetDefinition(String id, String displayNameKey, Supplier<Item> helmet, Supplier<Item> chestplate, Supplier<Item> leggings,
                               Supplier<Item> boots, List<ArmorSetBonus> materialBonuses, List<ArmorSetBonus> classBonuses) {
         this.id = id;
-        this.displayName = displayName;
+        this.displayNameKey = displayNameKey;
         this.helmet = helmet;
         this.chestplate = chestplate;
         this.leggings = leggings;
@@ -42,8 +43,8 @@ public class ArmorSetDefinition {
         return id;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getDisplayNameKey() {
+        return displayNameKey;
     }
 
     public List<ArmorSetBonus> getMaterialBonuses() {
@@ -111,5 +112,72 @@ public class ArmorSetDefinition {
 
     private static boolean matchesSlot(ItemStack stack, Supplier<Item> expected) {
         return !stack.isEmpty() && stack.getItem() == expected.get();
+    }
+
+    public static Builder builder(String id) {
+        return new Builder(id);
+    }
+
+    public static final class Builder {
+        private final String id;
+        private String displayNameKey;
+        private Supplier<Item> helmet;
+        private Supplier<Item> chestplate;
+        private Supplier<Item> leggings;
+        private Supplier<Item> boots;
+        private final List<ArmorSetBonus> materialBonuses = new ArrayList<>();
+        private final List<ArmorSetBonus> classBonuses = new ArrayList<>();
+
+        private Builder(String id) {
+            this.id = Objects.requireNonNull(id, "id");
+        }
+
+        public Builder displayNameKey(String displayNameKey) {
+            this.displayNameKey = Objects.requireNonNull(displayNameKey, "displayNameKey");
+            return this;
+        }
+
+        public Builder helmet(Supplier<Item> helmet) {
+            this.helmet = Objects.requireNonNull(helmet, "helmet");
+            return this;
+        }
+
+        public Builder chestplate(Supplier<Item> chestplate) {
+            this.chestplate = Objects.requireNonNull(chestplate, "chestplate");
+            return this;
+        }
+
+        public Builder leggings(Supplier<Item> leggings) {
+            this.leggings = Objects.requireNonNull(leggings, "leggings");
+            return this;
+        }
+
+        public Builder boots(Supplier<Item> boots) {
+            this.boots = Objects.requireNonNull(boots, "boots");
+            return this;
+        }
+
+        public Builder materialBonus(ArmorSetBonus bonus) {
+            this.materialBonuses.add(Objects.requireNonNull(bonus, "bonus"));
+            return this;
+        }
+
+        public Builder classBonus(ArmorSetBonus bonus) {
+            this.classBonuses.add(Objects.requireNonNull(bonus, "bonus"));
+            return this;
+        }
+
+        public ArmorSetDefinition build() {
+            return new ArmorSetDefinition(
+                    id,
+                    Objects.requireNonNull(displayNameKey, "displayNameKey"),
+                    Objects.requireNonNull(helmet, "helmet"),
+                    Objects.requireNonNull(chestplate, "chestplate"),
+                    Objects.requireNonNull(leggings, "leggings"),
+                    Objects.requireNonNull(boots, "boots"),
+                    materialBonuses,
+                    classBonuses
+            );
+        }
     }
 }

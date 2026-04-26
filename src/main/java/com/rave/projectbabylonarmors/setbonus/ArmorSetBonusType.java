@@ -1,16 +1,22 @@
 package com.rave.projectbabylonarmors.setbonus;
 
+import net.minecraft.network.chat.Component;
+
 public enum ArmorSetBonusType {
-    MATERIAL("Material Passive"),
-    CLASS("Class Passive");
+    MATERIAL("tooltip.project_babylon_armors.material_passive"),
+    CLASS("tooltip.project_babylon_armors.class_passive");
 
-    private final String title;
+    private final String translationKey;
 
-    ArmorSetBonusType(String title) {
-        this.title = title;
+    ArmorSetBonusType(String translationKey) {
+        this.translationKey = translationKey;
     }
 
-    public String getTitle() {
-        return title;
+    public Component getTitle() {
+        return Component.translatable(translationKey);
+    }
+
+    public String getTranslationKey() {
+        return translationKey;
     }
 }

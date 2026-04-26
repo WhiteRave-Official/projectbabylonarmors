@@ -1,3 +1,23 @@
 {
-  "itemGroup.project_babylon_armors.armors": "Project Babylon Armors"
+  "itemGroup.project_babylon_armors.armors": "Project Babylon Armors",
+  "tooltip.project_babylon_armors.hold_shift": "Hold Shift to see armor set bonuses",
+  "tooltip.project_babylon_armors.set_label": "Set: %s",
+  "tooltip.project_babylon_armors.pieces_label": "Pieces: %s/%s",
+  "tooltip.project_babylon_armors.armor_pieces": "Armor Pieces",
+  "tooltip.project_babylon_armors.piece.helmet": "Helmet",
+  "tooltip.project_babylon_armors.piece.chestplate": "Chestplate",
+  "tooltip.project_babylon_armors.piece.leggings": "Leggings",
+  "tooltip.project_babylon_armors.piece.boots": "Boots",
+  "tooltip.project_babylon_armors.equipped": "Equipped",
+  "tooltip.project_babylon_armors.missing": "Missing",
+  "tooltip.project_babylon_armors.class_passive": "Armor Passive",
+  "tooltip.project_babylon_armors.material_passive": "Material Passive",
+  "tooltip.project_babylon_armors.set.iron_warrior": "Iron Warrior",
+  "tooltip.project_babylon_armors.set.iron_mage": "Iron Mage",
+  "tooltip.project_babylon_armors.bonus.iron_knight.name": "Iron Knight",
+  "tooltip.project_babylon_armors.bonus.iron_knight.damage": "      +10% Damage",
+  "tooltip.project_babylon_armors.bonus.iron_knight.health": "      +10% Max Health",
+  "tooltip.project_babylon_armors.bonus.iron_arcanist.name": "Iron Arcanist",
+  "tooltip.project_babylon_armors.bonus.iron_arcanist.mana": "      +50 Max Mana",
+  "tooltip.project_babylon_armors.bonus.iron_arcanist.spell_power": "      +15% Spell Power"
 }

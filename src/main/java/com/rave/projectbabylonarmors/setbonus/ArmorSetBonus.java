@@ -12,6 +12,8 @@ public interface ArmorSetBonus {
 
     Component getDisplayName();
 
+    ResourceLocation getFrameTexture();
+
     ResourceLocation getIconTexture();
 
     void apply(Player player);
