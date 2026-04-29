@@ -2,13 +2,16 @@ package com.rave.projectbabylonarmors.setbonus;
 
 import com.rave.projectbabylonarmors.init.PBArmorItems;
 import com.rave.projectbabylonarmors.setbonus.impl.IronMageArmorSetBonus;
+import com.rave.projectbabylonarmors.setbonus.impl.IronRogueArmorSetBonus;
+import com.rave.projectbabylonarmors.setbonus.impl.IronTankArmorSetBonus;
 import com.rave.projectbabylonarmors.setbonus.impl.IronWarriorArmorSetBonus;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import com.rave.projectbabylonmaterials.setbonus.ArmorSetDefinition;
 
 import java.util.List;
 
 public final class ArmorSetRegistry {
+
+    private static boolean bootstrapped;
 
     private static final ArmorSetDefinition IRON_WARRIOR_SET = ArmorSetDefinition.builder("iron_warrior")
             .displayNameKey("tooltip.project_babylon_armors.set.iron_warrior")
@@ -28,42 +31,40 @@ public final class ArmorSetRegistry {
             .classBonus(new IronMageArmorSetBonus())
             .build();
 
+    private static final ArmorSetDefinition IRON_TANK_SET = ArmorSetDefinition.builder("iron_tank")
+            .displayNameKey("tooltip.project_babylon_armors.set.iron_tank")
+            .helmet(PBArmorItems.IRON_TANK_HELMET)
+            .chestplate(PBArmorItems.IRON_TANK_CHESTPLATE)
+            .leggings(PBArmorItems.IRON_TANK_LEGGINGS)
+            .boots(PBArmorItems.IRON_TANK_BOOTS)
+            .classBonus(new IronTankArmorSetBonus())
+            .build();
+
+    private static final ArmorSetDefinition IRON_ROGUE_SET = ArmorSetDefinition.builder("iron_rogue")
+            .displayNameKey("tooltip.project_babylon_armors.set.iron_rogue")
+            .helmet(PBArmorItems.IRON_ROGUE_HELMET)
+            .chestplate(PBArmorItems.IRON_ROGUE_CHESTPLATE)
+            .leggings(PBArmorItems.IRON_ROGUE_LEGGINGS)
+            .boots(PBArmorItems.IRON_ROGUE_BOOTS)
+            .classBonus(new IronRogueArmorSetBonus())
+            .build();
+
     private static final List<ArmorSetDefinition> SETS = List.of(
             IRON_WARRIOR_SET,
-            IRON_MAGE_SET
+            IRON_MAGE_SET,
+            IRON_TANK_SET,
+            IRON_ROGUE_SET
     );
 
     private ArmorSetRegistry() {
     }
 
-    public static List<ArmorSetDefinition> getAll() {
-        return SETS;
-    }
-
-    public static ArmorSetDefinition findContaining(Item item) {
-        for (ArmorSetDefinition set : SETS) {
-            if (set.contains(item)) {
-                return set;
-            }
+    public static void bootstrap() {
+        if (bootstrapped) {
+            return;
         }
-        return null;
-    }
 
-    public static ArmorSetDefinition findMatching(Player player) {
-        for (ArmorSetDefinition set : SETS) {
-            if (set.matches(player)) {
-                return set;
-            }
-        }
-        return null;
-    }
-
-    public static ArmorSetDefinition findById(String setId) {
-        for (ArmorSetDefinition set : SETS) {
-            if (set.getId().equals(setId)) {
-                return set;
-            }
-        }
-        return null;
+        com.rave.projectbabylonmaterials.setbonus.ArmorSetRegistry.registerAll(SETS);
+        bootstrapped = true;
     }
 }

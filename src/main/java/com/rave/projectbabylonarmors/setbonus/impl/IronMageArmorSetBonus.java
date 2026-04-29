@@ -1,8 +1,8 @@
 package com.rave.projectbabylonarmors.setbonus.impl;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
-import com.rave.projectbabylonarmors.setbonus.ArmorSetBonus;
-import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusType;
+import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonus;
+import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

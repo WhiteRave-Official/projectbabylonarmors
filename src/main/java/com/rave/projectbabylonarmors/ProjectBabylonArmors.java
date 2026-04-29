@@ -3,8 +3,7 @@ package com.rave.projectbabylonarmors;
 import com.mojang.logging.LogUtils;
 import com.rave.projectbabylonarmors.init.PBArmorItems;
 import com.rave.projectbabylonarmors.init.PBCreativeTabs;
-import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusManager;
-import net.minecraftforge.common.MinecraftForge;
+import com.rave.projectbabylonarmors.setbonus.ArmorSetRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -17,11 +16,9 @@ public class ProjectBabylonArmors {
 
     public ProjectBabylonArmors(FMLJavaModLoadingContext context) {
         IEventBus modBus = context.getModEventBus();
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         PBArmorItems.ITEMS.register(modBus);
         PBCreativeTabs.TABS.register(modBus);
-        forgeBus.register(ArmorSetBonusManager.class);
-
+        ArmorSetRegistry.bootstrap();
     }
 }

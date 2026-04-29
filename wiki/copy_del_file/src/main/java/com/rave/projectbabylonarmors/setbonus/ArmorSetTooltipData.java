@@ -1,5 +1,6 @@
 package com.rave.projectbabylonarmors.setbonus;
 
+import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;

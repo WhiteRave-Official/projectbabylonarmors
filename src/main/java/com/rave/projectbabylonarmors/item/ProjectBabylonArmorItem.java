@@ -1,6 +1,6 @@
 package com.rave.projectbabylonarmors.item;
 
-import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusManager;
+import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

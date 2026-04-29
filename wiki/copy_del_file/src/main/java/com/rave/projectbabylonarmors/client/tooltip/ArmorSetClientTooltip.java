@@ -1,6 +1,5 @@
 package com.rave.projectbabylonarmors.client.tooltip;
 
-import com.rave.projectbabylonarmors.setbonus.ArmorSetBonusType;
 import com.rave.projectbabylonarmors.setbonus.ArmorSetTooltipData;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.ChatFormatting;

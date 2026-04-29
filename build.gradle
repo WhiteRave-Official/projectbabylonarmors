@@ -104,6 +104,9 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven {
+        url = uri("../projectbabylonmaterials/mcmodsrepo")
+    }
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
@@ -121,9 +124,6 @@ repositories {
     }
 }
 
-mixin {
-
-}
 
 dependencies {
     // Specify the version of Minecraft to use.
@@ -148,10 +148,12 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:6860192")
+    implementation fg.deobf("curse.maven:selene-499980:7541536")
     implementation fg.deobf("curse.maven:epic-fight-mod-405076:7476040")
 
     implementation fg.deobf("curse.maven:epicfight-project-babylon-weapons-1485770:7762279")
-    implementation fg.deobf("curse.maven:project-babylon-materials-1482989:7752032")
+    implementation fg.deobf("com.rave.projectbabylonmaterials:projectbabylonmaterials:1.0.3")
     
     implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7691158")
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
@@ -214,6 +216,9 @@ publishing {
     }
     repositories {
         maven {
+            url = uri("../projectbabylonmaterials/mcmodsrepo")
+        }
+        maven {
             url "file://${project.projectDir}/mcmodsrepo"
         }
     }
@@ -222,3 +227,4 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
+
