@@ -37,7 +37,7 @@ public abstract class DiamondTankArmor extends ProjectBabylonArmorItem {
 
         @Override
         public int getDefenseForType(ArmorItem.Type type) {
-            return new int[]{2, 5, 6, 2}[type.getSlot().getIndex()];
+            return new int[]{4, 8, 9, 4}[type.getSlot().getIndex()];
         }
 
         @Override
@@ -62,17 +62,22 @@ public abstract class DiamondTankArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 4f;
         }
 
         @Override
         public float getKnockbackResistance() {
-            return 0f;
+            return 0.0f;
         }
     };
     public DiamondTankArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 0.5D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class DiamondTankArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

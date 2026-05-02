@@ -37,7 +37,7 @@ public abstract class DragonsteelWarriorArmor extends ProjectBabylonArmorItem {
 
         @Override
         public int getDefenseForType(ArmorItem.Type type) {
-            return new int[]{2, 5, 6, 2}[type.getSlot().getIndex()];
+            return new int[]{5, 11, 13, 5}[type.getSlot().getIndex()];
         }
 
         @Override
@@ -62,7 +62,7 @@ public abstract class DragonsteelWarriorArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 7f;
         }
 
         @Override
@@ -73,6 +73,11 @@ public abstract class DragonsteelWarriorArmor extends ProjectBabylonArmorItem {
     public DragonsteelWarriorArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 1.25D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class DragonsteelWarriorArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

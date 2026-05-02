@@ -62,7 +62,7 @@ public abstract class IronWarriorArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 1.25f;
         }
 
         @Override
@@ -73,6 +73,11 @@ public abstract class IronWarriorArmor extends ProjectBabylonArmorItem {
     public IronWarriorArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 0.0D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class IronWarriorArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

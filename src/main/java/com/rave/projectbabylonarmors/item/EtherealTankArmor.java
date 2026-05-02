@@ -37,7 +37,7 @@ public abstract class EtherealTankArmor extends ProjectBabylonArmorItem {
 
         @Override
         public int getDefenseForType(ArmorItem.Type type) {
-            return new int[]{2, 5, 6, 2}[type.getSlot().getIndex()];
+            return new int[]{5, 10, 11, 5}[type.getSlot().getIndex()];
         }
 
         @Override
@@ -62,17 +62,22 @@ public abstract class EtherealTankArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 5.5f;
         }
 
         @Override
         public float getKnockbackResistance() {
-            return 0f;
+            return 0.0f;
         }
     };
     public EtherealTankArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 4.0D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class EtherealTankArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

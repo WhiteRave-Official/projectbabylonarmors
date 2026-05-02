@@ -37,7 +37,7 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem {
 
         @Override
         public int getDefenseForType(ArmorItem.Type type) {
-            return new int[]{2, 5, 6, 2}[type.getSlot().getIndex()];
+            return new int[]{2, 7, 8, 2}[type.getSlot().getIndex()];
         }
 
         @Override
@@ -62,7 +62,7 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 2f;
         }
 
         @Override
@@ -73,6 +73,11 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem {
     public NetheriteMageArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 1.25D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

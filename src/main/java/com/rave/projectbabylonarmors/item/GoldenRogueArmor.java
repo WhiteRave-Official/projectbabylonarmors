@@ -62,7 +62,7 @@ public abstract class GoldenRogueArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 1f;
         }
 
         @Override
@@ -73,6 +73,11 @@ public abstract class GoldenRogueArmor extends ProjectBabylonArmorItem {
     public GoldenRogueArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 1.5D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -216,6 +221,7 @@ public abstract class GoldenRogueArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 

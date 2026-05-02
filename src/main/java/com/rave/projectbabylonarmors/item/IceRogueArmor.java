@@ -37,7 +37,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem {
 
         @Override
         public int getDefenseForType(ArmorItem.Type type) {
-            return new int[]{2, 5, 6, 2}[type.getSlot().getIndex()];
+            return new int[]{3, 6, 8, 3}[type.getSlot().getIndex()];
         }
 
         @Override
@@ -62,7 +62,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem {
 
         @Override
         public float getToughness() {
-            return 0f;
+            return 2f;
         }
 
         @Override
@@ -73,6 +73,11 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem {
     public IceRogueArmor(ArmorItem.Type type, Item.Properties properties) {
         super(MATERIAL, type, properties);
     }
+    @Override
+    protected double getMagicArmorBonus() {
+        return 0.5D;
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -184,7 +189,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem {
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ice_assasin_chestplate.png";
+            return "project_babylon_armors:textures/entities/ice_rogue_chestplate.png";
         }
 
     }
@@ -216,6 +221,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
 
 
 
