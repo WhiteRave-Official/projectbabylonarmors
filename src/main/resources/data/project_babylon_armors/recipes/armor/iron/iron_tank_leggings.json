@@ -1,0 +1,18 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "category":  "equipment",
+    "key":  {
+                "I":  {
+                          "item":  "minecraft:iron_ingot"
+                      }
+            },
+    "pattern":  [
+                    "III",
+                    "I I",
+                    "I I"
+                ],
+    "result":  {
+                   "item":  "project_babylon_armors:iron_tank_leggings"
+               },
+    "show_notification":  true
+}

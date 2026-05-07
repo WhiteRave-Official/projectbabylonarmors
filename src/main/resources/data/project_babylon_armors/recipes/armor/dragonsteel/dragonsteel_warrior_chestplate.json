@@ -1,0 +1,21 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "category":  "equipment",
+    "key":  {
+                "I":  {
+                          "item":  "project_babylon_materials:dragonsteel_ingot"
+                      },
+                "P":  {
+                          "item":  "project_babylon_materials:dragonsteel_plate"
+                      }
+            },
+    "pattern":  [
+                    "P P",
+                    "IPI",
+                    "III"
+                ],
+    "result":  {
+                   "item":  "project_babylon_armors:dragonsteel_warrior_chestplate"
+               },
+    "show_notification":  true
+}

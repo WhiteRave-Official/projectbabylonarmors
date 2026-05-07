@@ -1,17 +1,19 @@
 package com.rave.projectbabylonarmors.setbonus;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
+import com.rave.projectbabylonmaterials.combat.ProjectileReflectionHelper;
 import com.rave.projectbabylonmaterials.ProjectBabylonMaterials;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonus;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
+import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -47,6 +49,10 @@ public final class DiamondMaterialBonuses {
         public static void onLivingAttack(LivingAttackEvent event) {
             LivingEntity defender = event.getEntity();
             if (defender.level().isClientSide()) {
+                return;
+            }
+
+            if (event.getSource().getDirectEntity() instanceof AbstractMagicProjectile) {
                 return;
             }
 
@@ -139,6 +145,7 @@ public final class DiamondMaterialBonuses {
         }
 
         private static void reflectProjectile(Projectile projectile, LivingEntity reflector, LivingEntity attacker) {
+            Entity originalOwner = projectile.getOwner();
             Vec3 origin = reflector.getEyePosition().add(reflector.getLookAngle().scale(0.6D));
             Vec3 direction = attacker.getEyePosition().subtract(origin).normalize();
             Vec3 originalVelocity = projectile.getDeltaMovement();
@@ -147,7 +154,7 @@ public final class DiamondMaterialBonuses {
                 speed = REFLECTED_PROJECTILE_SPEED;
             }
 
-            projectile.setOwner(reflector);
+            ProjectileReflectionHelper.assignReflectedOwner(projectile, originalOwner, reflector);
             projectile.setPos(origin.x, origin.y, origin.z);
             projectile.setDeltaMovement(direction.scale(speed));
             projectile.hurtMarked = true;

@@ -66,15 +66,19 @@ public final class ArmorSetRegistry {
 
             createSet("ethereal_warrior", "tooltip.project_babylon_armors.set.ethereal_warrior",
                     PBArmorItems.ETHEREAL_WARRIOR_HELMET, PBArmorItems.ETHEREAL_WARRIOR_CHESTPLATE, PBArmorItems.ETHEREAL_WARRIOR_LEGGINGS, PBArmorItems.ETHEREAL_WARRIOR_BOOTS,
+                    EtherealMaterialBonuses.enlightened(),
                     ClassArmorSetBonuses.warrior("ethereal_warrior", "tooltip.project_babylon_armors.bonus.astral_blade.name", 25.0D, 28.0D, 10.0D)),
             createSet("ethereal_mage", "tooltip.project_babylon_armors.set.ethereal_mage",
                     PBArmorItems.ETHEREAL_MAGE_HELMET, PBArmorItems.ETHEREAL_MAGE_CHESTPLATE, PBArmorItems.ETHEREAL_MAGE_LEGGINGS, PBArmorItems.ETHEREAL_MAGE_BOOTS,
+                    EtherealMaterialBonuses.enlightened(),
                     ClassArmorSetBonuses.mage("ethereal_mage", "tooltip.project_babylon_armors.bonus.astral_hierophant.name", 100.0D, 25.0D, 15.0D, 10.0D, 10.0D)),
             createSet("ethereal_tank", "tooltip.project_babylon_armors.set.ethereal_tank",
                     PBArmorItems.ETHEREAL_TANK_HELMET, PBArmorItems.ETHEREAL_TANK_CHESTPLATE, PBArmorItems.ETHEREAL_TANK_LEGGINGS, PBArmorItems.ETHEREAL_TANK_BOOTS,
+                    EtherealMaterialBonuses.enlightened(),
                     ClassArmorSetBonuses.tank("ethereal_tank", "tooltip.project_babylon_armors.bonus.aegis_ascendant.name", 28.0D, 28.0D, 10.0D)),
             createSet("ethereal_rogue", "tooltip.project_babylon_armors.set.ethereal_rogue",
                     PBArmorItems.ETHEREAL_ROGUE_HELMET, PBArmorItems.ETHEREAL_ROGUE_CHESTPLATE, PBArmorItems.ETHEREAL_ROGUE_LEGGINGS, PBArmorItems.ETHEREAL_ROGUE_BOOTS,
+                    EtherealMaterialBonuses.enlightened(),
                     ClassArmorSetBonuses.rogue("ethereal_rogue", "tooltip.project_babylon_armors.bonus.phantom_dancer.name", 15.0D, 18.0D, 15.0D, 15.0D, null)),
 
             createSet("netherite_warrior", "tooltip.project_babylon_armors.set.netherite_warrior",
@@ -96,15 +100,19 @@ public final class ArmorSetRegistry {
 
             createSet("dragonsteel_warrior", "tooltip.project_babylon_armors.set.dragonsteel_warrior",
                     PBArmorItems.DRAGONSTEEL_WARRIOR_HELMET, PBArmorItems.DRAGONSTEEL_WARRIOR_CHESTPLATE, PBArmorItems.DRAGONSTEEL_WARRIOR_LEGGINGS, PBArmorItems.DRAGONSTEEL_WARRIOR_BOOTS,
+                    DragonsteelMaterialBonuses.rebirth(),
                     ClassArmorSetBonuses.warrior("dragonsteel_warrior", "tooltip.project_babylon_armors.bonus.dragonsoul_champion.name", 30.0D, 35.0D, 15.0D)),
             createSet("dragonsteel_mage", "tooltip.project_babylon_armors.set.dragonsteel_mage",
                     PBArmorItems.DRAGONSTEEL_MAGE_HELMET, PBArmorItems.DRAGONSTEEL_MAGE_CHESTPLATE, PBArmorItems.DRAGONSTEEL_MAGE_LEGGINGS, PBArmorItems.DRAGONSTEEL_MAGE_BOOTS,
+                    DragonsteelMaterialBonuses.rebirth(),
                     ClassArmorSetBonuses.mage("dragonsteel_mage", "tooltip.project_babylon_armors.bonus.wyrm_archmage.name", 125.0D, 33.0D, 22.0D, 22.0D, 22.0D)),
             createSet("dragonsteel_tank", "tooltip.project_babylon_armors.set.dragonsteel_tank",
                     PBArmorItems.DRAGONSTEEL_TANK_HELMET, PBArmorItems.DRAGONSTEEL_TANK_CHESTPLATE, PBArmorItems.DRAGONSTEEL_TANK_LEGGINGS, PBArmorItems.DRAGONSTEEL_TANK_BOOTS,
+                    DragonsteelMaterialBonuses.rebirth(),
                     ClassArmorSetBonuses.tank("dragonsteel_tank", "tooltip.project_babylon_armors.bonus.wyrmguard.name", 35.0D, 35.0D, 15.0D)),
             createSet("dragonsteel_rogue", "tooltip.project_babylon_armors.set.dragonsteel_rogue",
                     PBArmorItems.DRAGONSTEEL_ROGUE_HELMET, PBArmorItems.DRAGONSTEEL_ROGUE_CHESTPLATE, PBArmorItems.DRAGONSTEEL_ROGUE_LEGGINGS, PBArmorItems.DRAGONSTEEL_ROGUE_BOOTS,
+                    DragonsteelMaterialBonuses.rebirth(),
                     ClassArmorSetBonuses.rogue("dragonsteel_rogue", "tooltip.project_babylon_armors.bonus.dragon_fang.name", 25.0D, 20.0D, 25.0D, 25.0D, 15.0D))
     );
 
@@ -149,4 +157,6 @@ public final class ArmorSetRegistry {
                 .build();
     }
 }
+
+
 

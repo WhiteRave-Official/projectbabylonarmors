@@ -1,0 +1,18 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "category":  "equipment",
+    "key":  {
+                "C":  {
+                          "item":  "project_babylon_materials:cloth"
+                      }
+            },
+    "pattern":  [
+                    "CCC",
+                    "C C",
+                    "C C"
+                ],
+    "result":  {
+                   "item":  "project_babylon_armors:iron_mage_leggings"
+               },
+    "show_notification":  true
+}

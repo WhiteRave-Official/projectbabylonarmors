@@ -1,0 +1,21 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "category":  "equipment",
+    "key":  {
+                "I":  {
+                          "item":  "project_babylon_materials:infused_golden_ingot"
+                      },
+                "P":  {
+                          "item":  "project_babylon_materials:infused_golden_plate"
+                      }
+            },
+    "pattern":  [
+                    "IPI",
+                    "P P",
+                    "I I"
+                ],
+    "result":  {
+                   "item":  "project_babylon_armors:golden_warrior_leggings"
+               },
+    "show_notification":  true
+}

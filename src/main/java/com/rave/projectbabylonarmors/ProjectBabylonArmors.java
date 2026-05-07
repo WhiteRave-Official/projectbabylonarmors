@@ -1,6 +1,7 @@
 package com.rave.projectbabylonarmors;
 
 import com.mojang.logging.LogUtils;
+import com.rave.projectbabylonarmors.init.PBArmorEffects;
 import com.rave.projectbabylonarmors.init.PBArmorItems;
 import com.rave.projectbabylonarmors.init.PBCreativeTabs;
 import com.rave.projectbabylonarmors.setbonus.ArmorSetRegistry;
@@ -17,6 +18,7 @@ public class ProjectBabylonArmors {
     public ProjectBabylonArmors(FMLJavaModLoadingContext context) {
         IEventBus modBus = context.getModEventBus();
 
+        PBArmorEffects.EFFECTS.register(modBus);
         PBArmorItems.ITEMS.register(modBus);
         PBCreativeTabs.TABS.register(modBus);
         ArmorSetRegistry.bootstrap();

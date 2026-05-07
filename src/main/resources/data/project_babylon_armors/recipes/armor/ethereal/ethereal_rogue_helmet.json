@@ -1,0 +1,20 @@
+{
+    "type":  "minecraft:crafting_shaped",
+    "category":  "equipment",
+    "key":  {
+                "C":  {
+                          "item":  "project_babylon_materials:ethereal_cloth"
+                      },
+                "P":  {
+                          "item":  "project_babylon_materials:ethereal_plate"
+                      }
+            },
+    "pattern":  [
+                    "CPC",
+                    "C C"
+                ],
+    "result":  {
+                   "item":  "project_babylon_armors:ethereal_rogue_helmet"
+               },
+    "show_notification":  true
+}
