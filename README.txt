@@ -27,12 +27,12 @@
 - Third-party redistribution is allowed only if all the following conditions are met:
     - All assets under `src/main/resources/assets` are removed and replaced with custom, original-made assets.
     - The mod got released publicly.
-    - The mod and project use a different name to avoid confusion with Epic Fight QuickSwap.
+    - The mod and project use a different name to avoid confusion with Project Babylon Mods.
     - Credit and a link to the original project are provided.
 
 ### **You CANNOT**
 
 - Redistribute ANY assets from this mod (located under `src/main/resources/assets`).
     - **Note:** You may replace all original assets with your own to redistribute your fork publicly.
-- Sell addons, mods, or other derivative works that use any EpicFight QuickSwap assets, including but not limited to animations,
+- Sell addons, mods, or other derivative works that use any Project Babylon assets, including but not limited to animations,
   textures, sounds, or models.

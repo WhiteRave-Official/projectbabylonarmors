@@ -78,6 +78,16 @@ public abstract class NetheriteTankArmor extends ProjectBabylonArmorItem {
         return 0.75D;
     }
 
+    @Override
+    protected double getMovementSpeedPenalty() {
+        return switch (getArmorType()) {
+            case HELMET, BOOTS -> -0.01D;
+            case CHESTPLATE -> -0.03D;
+            case LEGGINGS -> -0.02D;
+            default -> 0.0D;
+        };
+    }
+
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -221,6 +231,10 @@ public abstract class NetheriteTankArmor extends ProjectBabylonArmorItem {
     }
 
 }
+
+
+
+
 
 
 
