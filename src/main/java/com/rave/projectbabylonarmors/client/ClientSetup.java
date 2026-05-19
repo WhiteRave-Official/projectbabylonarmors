@@ -1,6 +1,7 @@
 package com.rave.projectbabylonarmors.client;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
+import com.rave.projectbabylonarmors.client.geo.renderer.PBAGeoArmorSets;
 import com.rave.projectbabylonarmors.client.model.DiamondMageBoots;
 import com.rave.projectbabylonarmors.client.model.DiamondMageChestplate;
 import com.rave.projectbabylonarmors.client.model.DiamondMageHelmet;
@@ -116,10 +117,34 @@ import com.rave.projectbabylonarmors.client.model.NetheriteWarriorLeggings;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = ProjectBabylonArmors.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
+
+    private static final String EPIC_FIGHT_COMPAT_CLASS = "com.rave.projectbabylonarmors.client.compat.epicfight.EpicFightClientCompat";
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            PBAGeoArmorSets.registerAll();
+
+            if (!ModList.get().isLoaded("epicfight")) {
+                return;
+            }
+
+            try {
+                Class<?> compatClass = Class.forName(EPIC_FIGHT_COMPAT_CLASS);
+                compatClass.getMethod("register").invoke(null);
+                ProjectBabylonArmors.LOGGER.info("Epic Fight compatibility initialized for Project Babylon Armors.");
+            } catch (ReflectiveOperationException exception) {
+                ProjectBabylonArmors.LOGGER.error("Failed to initialize Epic Fight compatibility for Project Babylon Armors.", exception);
+            }
+        });
+    }
+
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -213,8 +238,7 @@ public class ClientSetup {
         event.registerLayerDefinition(IronRogueLeggings.LAYER_LOCATION, IronRogueLeggings::createBodyLayer);
         event.registerLayerDefinition(IronTankBoots.LAYER_LOCATION, IronTankBoots::createBodyLayer);
         event.registerLayerDefinition(IronTankChestplate.LAYER_LOCATION, IronTankChestplate::createBodyLayer);
-        event.registerLayerDefinition(IronTankHelmet.LAYER_LOCATION, IronTankHelmet::createBodyLayer);
-        event.registerLayerDefinition(IronTankLeggings.LAYER_LOCATION, IronTankLeggings::createBodyLayer);
+        event.registerLayerDefinition(IronTankHelmet.LAYER_LOCATION, IronTankHelmet::createBodyLayer);        event.registerLayerDefinition(IronTankLeggings.LAYER_LOCATION, IronTankLeggings::createBodyLayer);
         event.registerLayerDefinition(IronWarriorBoots.LAYER_LOCATION, IronWarriorBoots::createBodyLayer);
         event.registerLayerDefinition(IronWarriorChestplate.LAYER_LOCATION, IronWarriorChestplate::createBodyLayer);
         event.registerLayerDefinition(IronWarriorHelmet.LAYER_LOCATION, IronWarriorHelmet::createBodyLayer);

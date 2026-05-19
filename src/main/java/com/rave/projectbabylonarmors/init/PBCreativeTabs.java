@@ -1,15 +1,20 @@
 package com.rave.projectbabylonarmors.init;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class PBCreativeTabs {
+    private static final ResourceKey<Registry<CreativeModeTab>> CREATIVE_MODE_TAB_KEY =
+            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath("minecraft", "creative_mode_tab"));
+
     public static final DeferredRegister<CreativeModeTab> TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ProjectBabylonArmors.MODID);
+            DeferredRegister.create(CREATIVE_MODE_TAB_KEY, ProjectBabylonArmors.MODID);
 
     public static final RegistryObject<CreativeModeTab> ARMORS = TABS.register("armors", () ->
             CreativeModeTab.builder()
