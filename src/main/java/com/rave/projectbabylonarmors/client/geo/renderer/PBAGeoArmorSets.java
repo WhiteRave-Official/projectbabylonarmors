@@ -23,6 +23,22 @@ public final class PBAGeoArmorSets {
         GoldenMageGeoRenderers.register();
         GoldenRogueGeoRenderers.register();
         GoldenTankGeoRenderers.register();
+        NetheriteWarriorGeoRenderers.register();
+        NetheriteMageGeoRenderers.register();
+        NetheriteRogueGeoRenderers.register();
+        NetheriteTankGeoRenderers.register();
+        IceWarriorGeoRenderers.register();
+        IceMageGeoRenderers.register();
+        IceRogueGeoRenderers.register();
+        IceTankGeoRenderers.register();
+        EtherealWarriorGeoRenderers.register();
+        EtherealMageGeoRenderers.register();
+        EtherealRogueGeoRenderers.register();
+        EtherealTankGeoRenderers.register();
+        DragonsteelWarriorGeoRenderers.register();
+        DragonsteelMageGeoRenderers.register();
+        DragonsteelRogueGeoRenderers.register();
+        DragonsteelTankGeoRenderers.register();
         registered = true;
     }
 }

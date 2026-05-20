@@ -26,6 +26,13 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.project_babylon_armors]]
+modId="geckolib"
+mandatory=true
+versionRange="[4.5.4.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.project_babylon_armors]]
 modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"
