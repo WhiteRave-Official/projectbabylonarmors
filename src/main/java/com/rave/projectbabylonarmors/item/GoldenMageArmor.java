@@ -108,7 +108,7 @@ public abstract class GoldenMageArmor extends ProjectBabylonArmorItem implements
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/golden_mage_hood.png";
+            return "project_babylon_armors:textures/entities/golden_mage_helmet.png";
         }
     }
 

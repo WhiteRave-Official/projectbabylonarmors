@@ -31,16 +31,31 @@ public final class PBAGeoArmorRendererRegistry {
             return null;
         }
 
+        GeoArmorRenderer<?> cachedRenderer = CACHE.get(itemId);
+        if (cachedRenderer != null) {
+            return cachedRenderer;
+        }
+
         Supplier<? extends GeoArmorRenderer<?>> factory = FACTORIES.get(itemId);
         if (factory == null) {
             return null;
         }
 
-        return CACHE.computeIfAbsent(itemId, key -> factory.get());
+        GeoArmorRenderer<?> renderer = factory.get();
+        CACHE.put(itemId, renderer);
+        return renderer;
     }
 
     public static synchronized GeoArmorRenderer<?> getRenderer(Item item) {
         ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
         return getRenderer(itemId);
+    }
+
+    public static synchronized void clearCache() {
+        CACHE.clear();
+    }
+
+    public static synchronized int getCacheSize() {
+        return CACHE.size();
     }
 }

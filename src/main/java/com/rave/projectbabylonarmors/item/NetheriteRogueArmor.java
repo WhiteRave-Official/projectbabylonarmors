@@ -108,7 +108,7 @@ public abstract class NetheriteRogueArmor extends ProjectBabylonArmorItem implem
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/netherite_assasin_hood.png";
+            return "project_babylon_armors:textures/entities/netherite_assasin_helmet.png";
         }
     }
 

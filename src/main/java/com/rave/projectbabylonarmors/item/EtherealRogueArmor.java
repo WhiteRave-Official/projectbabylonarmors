@@ -108,7 +108,7 @@ public abstract class EtherealRogueArmor extends ProjectBabylonArmorItem impleme
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ethereal_assasin_hood.png";
+            return "project_babylon_armors:textures/entities/ethereal_assasin_helmet.png";
         }
     }
 

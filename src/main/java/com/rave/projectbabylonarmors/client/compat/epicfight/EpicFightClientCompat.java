@@ -1,34 +1,55 @@
 package com.rave.projectbabylonarmors.client.compat.epicfight;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
-import com.rave.projectbabylonarmors.client.geo.renderer.PBAGeoArmorAutoRegistry;
-import com.rave.projectbabylonarmors.client.geo.renderer.PBAGeoArmorSetDefinition;
-
+import com.rave.projectbabylonarmors.client.geo.renderer.PBAEpicFightGeoArmorTransformer;
+import com.rave.projectbabylonarmors.mixin.HumanoidModelBakerAccessor;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.api.client.model.SkinnedMesh;
+import yesman.epicfight.api.client.model.transformer.GeoModelTransformer;
 import yesman.epicfight.api.client.model.transformer.HumanoidModelTransformer;
-import yesman.epicfight.api.client.model.transformer.HumanoidModelBaker;
+
+import net.minecraft.world.item.ArmorItem;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public final class EpicFightClientCompat {
+    private static final PBAEpicFightGeoArmorTransformer GEO_ARMOR_TRANSFORMER = new PBAEpicFightGeoArmorTransformer();
+    private static boolean registered;
+
     private EpicFightClientCompat() {
     }
 
-    public static void register() {
-        for (PBAGeoArmorSetDefinition definition : PBAGeoArmorAutoRegistry.getDefinitions()) {
-            String transformerClassName = definition.getEpicFightTransformerClassName();
-            if (transformerClassName == null || transformerClassName.isBlank()) {
-                continue;
-            }
+    public static synchronized void register() {
+        refreshTransformers();
+        registered = true;
+    }
 
-            try {
-                Class<?> transformerClass = Class.forName(transformerClassName);
-                Object transformerInstance = transformerClass.getDeclaredConstructor().newInstance();
-                if (transformerInstance instanceof HumanoidModelTransformer transformer) {
-                    HumanoidModelBaker.registerNewTransformer(transformer);
-                } else {
-                    ProjectBabylonArmors.LOGGER.warn("Skipped Epic Fight transformer {} because it does not implement HumanoidModelTransformer.", transformerClassName);
-                }
-            } catch (ReflectiveOperationException exception) {
-                ProjectBabylonArmors.LOGGER.error("Failed to register Epic Fight transformer {}.", transformerClassName, exception);
-            }
-        }
+    public static synchronized void refreshTransformers() {
+        List<HumanoidModelTransformer> transformers = HumanoidModelBakerAccessor.pba$getModelTransformers();
+        transformers.removeIf(transformer -> transformer instanceof GeoModelTransformer || transformer instanceof PBAEpicFightGeoArmorTransformer);
+        transformers.add(GEO_ARMOR_TRANSFORMER);
+
+        clearExceptionalModels();
+        clearBakedModels();
+    }
+
+    public static boolean isRegistered() {
+        return registered;
+    }
+
+    private static void clearExceptionalModels() {
+        Set<ArmorItem> exceptionalModels = HumanoidModelBakerAccessor.pba$getExceptionalModels();
+        exceptionalModels.removeIf(armorItem -> {
+            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(armorItem);
+            return itemId != null && ProjectBabylonArmors.MODID.equals(itemId.getNamespace());
+        });
+    }
+
+    private static void clearBakedModels() {
+        Map<ResourceLocation, SkinnedMesh> bakedModels = HumanoidModelBakerAccessor.pba$getBakedModels();
+        bakedModels.keySet().removeIf(itemId -> itemId != null && ProjectBabylonArmors.MODID.equals(itemId.getNamespace()));
     }
 }

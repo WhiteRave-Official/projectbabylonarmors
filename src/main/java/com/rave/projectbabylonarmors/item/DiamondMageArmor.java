@@ -108,7 +108,7 @@ public abstract class DiamondMageArmor extends ProjectBabylonArmorItem implement
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/diamond_mage_hat.png";
+            return "project_babylon_armors:textures/entities/diamond_mage_helmet.png";
         }
     }
 

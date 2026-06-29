@@ -1,5 +1,6 @@
 package com.rave.projectbabylonarmors.client.geo.renderer;
 
+import com.rave.projectbabylonarmors.ProjectBabylonArmors;
 import com.rave.projectbabylonarmors.client.geo.model.PBAFixedGeoArmorModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -34,10 +35,13 @@ public abstract class PBAGeoArmorRenderer<T extends Item & GeoItem> extends GeoA
     }
 
     public BakedGeoModel getEpicFightBakedModel() {
-        BakedGeoModel bakedModel = this.getGeoModel().getBakedModel(getFixedArmorModel().getFixedModelResource());
+        ResourceLocation modelLocation = getFixedArmorModel().getFixedModelResource();
+        ResourceLocation textureLocation = getFixedArmorModel().getFixedTextureResource();        BakedGeoModel bakedModel = this.getGeoModel().getBakedModel(modelLocation);
+        if (bakedModel == null) {            return null;
+        }
+
         this.grabRelevantBones(bakedModel);
-        resetBoneRotations();
-        return bakedModel;
+        resetBoneRotations();        return bakedModel;
     }
 
     public ResourceLocation getEpicFightTextureLocation() {
@@ -80,9 +84,7 @@ public abstract class PBAGeoArmorRenderer<T extends Item & GeoItem> extends GeoA
     }
 
     @Override
-    public void prepareForEpicFightBake() {
-        resetBoneRotations();
-    }
+    public void prepareForEpicFightBake() {        resetBoneRotations();    }
 
     private void resetBoneRotations() {
         resetBone(this.head);

@@ -108,7 +108,7 @@ public abstract class IceMageArmor extends ProjectBabylonArmorItem implements Ge
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ice_mage_hat.png";
+            return "project_babylon_armors:textures/entities/ice_mage_helmet.png";
         }
     }
 

@@ -108,7 +108,7 @@ public abstract class NetheriteWarriorArmor extends ProjectBabylonArmorItem impl
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/netherite_warrior_diademe.png";
+            return "project_babylon_armors:textures/entities/netherite_warrior_helmet.png";
         }
     }
 

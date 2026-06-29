@@ -108,7 +108,7 @@ public abstract class DiamondRogueArmor extends ProjectBabylonArmorItem implemen
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/diamond_assasin_hat.png";
+            return "project_babylon_armors:textures/entities/diamond_assasin_helmet.png";
         }
     }
 

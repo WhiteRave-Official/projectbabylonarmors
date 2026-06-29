@@ -108,7 +108,7 @@ public abstract class IronMageArmor extends ProjectBabylonArmorItem implements G
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/iron_mage_hat.png";
+            return "project_babylon_armors:textures/entities/iron_mage_helmet.png";
         }
     }
 

@@ -108,7 +108,7 @@ public abstract class DragonsteelMageArmor extends ProjectBabylonArmorItem imple
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/dragonsteel_mage_hat.png";
+            return "project_babylon_armors:textures/entities/dragonsteel_mage_helmet.png";
         }
     }
 

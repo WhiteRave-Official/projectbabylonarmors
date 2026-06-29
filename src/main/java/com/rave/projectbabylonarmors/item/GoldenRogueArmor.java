@@ -108,7 +108,7 @@ public abstract class GoldenRogueArmor extends ProjectBabylonArmorItem implement
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/golden_assasin_mask.png";
+            return "project_babylon_armors:textures/entities/golden_assasin_helmet.png";
         }
     }
 

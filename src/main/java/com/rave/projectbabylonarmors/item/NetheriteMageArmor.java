@@ -108,7 +108,7 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem impleme
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/netherite_mage_hat.png";
+            return "project_babylon_armors:textures/entities/netherite_mage_helmet.png";
         }
     }
 
@@ -119,7 +119,7 @@ public abstract class NetheriteMageArmor extends ProjectBabylonArmorItem impleme
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/netherite_mage_hood.png";
+            return "project_babylon_armors:textures/entities/netherite_mage_chestplate.png";
         }
     }
 

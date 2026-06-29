@@ -61,27 +61,47 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
 
     @Override
     public SkinnedMesh transformArmorModel(HumanoidModel<?> humanoidModel) {
-        if (!(humanoidModel instanceof GeoArmorRenderer<?> geoRenderer) ||
-                !(humanoidModel instanceof PBAGeoArmorBoneBridge boneBridge) ||
-                !this.supportedModel.test(humanoidModel)) {
+        boolean isGeoRenderer = humanoidModel instanceof GeoArmorRenderer<?>;
+        boolean isBoneBridge = humanoidModel instanceof PBAGeoArmorBoneBridge;
+        boolean supported = this.supportedModel.test(humanoidModel);
+        if (!isGeoRenderer || !isBoneBridge || !supported) {
             return null;
         }
 
+        GeoArmorRenderer<?> geoRenderer = (GeoArmorRenderer<?>) humanoidModel;
+        PBAGeoArmorBoneBridge boneBridge = (PBAGeoArmorBoneBridge) humanoidModel;
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0, 10000, 0);
         geoRenderer.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.armorGlint()), 0, 0, 0, 0, 0, 0);
         boneBridge.prepareForEpicFightBake();
 
-        return bakeMeshFromCubes(
-                boneBridge.getHeadBone(),
-                boneBridge.getBodyBone(),
+        GeoBone headBone = boneBridge.getHeadBone();
+        GeoBone bodyBone = boneBridge.getBodyBone();
+        GeoBone rightArmBone = boneBridge.getRightArmBone();
+        GeoBone leftArmBone = boneBridge.getLeftArmBone();
+        GeoBone leftLegBone = boneBridge.getLeftLegBone();
+        GeoBone rightLegBone = boneBridge.getRightLegBone();
+        GeoBone leftBootBone = boneBridge.getLeftBootBone();
+        GeoBone rightBootBone = boneBridge.getRightBootBone();
+        resetRootBoneRotation(headBone);
+        resetRootBoneRotation(bodyBone);
+        resetRootBoneRotation(rightArmBone);
+        resetRootBoneRotation(leftArmBone);
+        resetRootBoneRotation(leftLegBone);
+        resetRootBoneRotation(rightLegBone);
+        resetRootBoneRotation(leftBootBone);
+        resetRootBoneRotation(rightBootBone);
+
+        SkinnedMesh mesh = bakeMeshFromCubes(
+                headBone,
+                bodyBone,
                 boneBridge.getBodyPartTransformer(),
-                boneBridge.getRightArmBone(),
-                boneBridge.getLeftArmBone(),
-                boneBridge.getLeftLegBone(),
-                boneBridge.getRightLegBone(),
-                boneBridge.getLeftBootBone(),
-                boneBridge.getRightBootBone());
+                rightArmBone,
+                leftArmBone,
+                leftLegBone,
+                rightLegBone,
+                leftBootBone,
+                rightBootBone);        return mesh;
     }
 
     private static SkinnedMesh bakeMeshFromCubes(GeoBone headBone, GeoBone bodyBone, PartTransformer<GeoCube> bodyTransformer,
@@ -101,7 +121,9 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         bakePartition(poseStack, LEFT_FEET, leftBootBone, vertices, indices, indexCounter);
         bakePartition(poseStack, RIGHT_FEET, rightBootBone, vertices, indices, indexCounter);
 
-        return vertices.isEmpty() ? null : SingleGroupVertexBuilder.loadVertexInformation(vertices, indices);
+        boolean empty = vertices.isEmpty();
+        if (empty) {            return null;
+        }        return SingleGroupVertexBuilder.loadVertexInformation(vertices, indices);
     }
 
     private static void bakePartition(PoseStack poseStack, PartTransformer<GeoCube> partTransformer, GeoBone rootBone,
@@ -112,6 +134,16 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         }
 
         bake(poseStack, partTransformer, rootBone, rootBone.getName(), rootBone, vertices, indices, new ArrayList<>(4), indexCounter, false);
+    }
+
+    private static void resetRootBoneRotation(GeoBone bone) {
+        if (bone == null) {
+            return;
+        }
+
+        bone.setRotX(0.0F);
+        bone.setRotY(0.0F);
+        bone.setRotZ(0.0F);
     }
 
     private static void bake(PoseStack poseStack, PartTransformer<GeoCube> partTransformer, GeoBone rootBone, String partName, GeoBone geoBone,
@@ -834,5 +866,6 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         }
     }
 }
+
 
 
