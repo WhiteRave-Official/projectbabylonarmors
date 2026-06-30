@@ -1,30 +1,15 @@
 {
-    "type":  "forge:conditional",
-    "recipes":  [
-                    {
-                        "conditions":  [
-                                           {
-                                               "type":  "forge:config",
-                                               "config":  "project_babylon_armors",
-                                               "path":  "recipes.enable_vanilla_armor_recipes",
-                                               "value":  true
-                                           }
-                                       ],
-                        "recipe":  {
-                                       "type":  "minecraft:smithing_transform",
-                                       "template":  {
-                                                        "item":  "minecraft:netherite_upgrade_smithing_template"
-                                                    },
-                                       "base":  {
-                                                    "item":  "minecraft:diamond_leggings"
-                                                },
-                                       "addition":  {
-                                                        "item":  "minecraft:netherite_ingot"
-                                                    },
-                                       "result":  {
-                                                      "item":  "minecraft:netherite_leggings"
-                                                  }
-                                   }
-                    }
-                ]
+    "type":  "minecraft:smithing_transform",
+    "template":  {
+                     "item":  "minecraft:netherite_upgrade_smithing_template"
+                 },
+    "base":  {
+                 "item":  "minecraft:diamond_leggings"
+             },
+    "addition":  {
+                     "item":  "minecraft:netherite_ingot"
+                 },
+    "result":  {
+                   "item":  "minecraft:netherite_leggings"
+               }
 }

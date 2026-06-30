@@ -12,13 +12,5 @@
             },
     "result":  {
                    "item":  "minecraft:leather_leggings"
-               },
-    "conditions":  [
-                       {
-                           "type":  "forge:config",
-                           "config":  "project_babylon_armors",
-                           "path":  "recipes.enable_vanilla_armor_recipes",
-                           "value":  true
-                       }
-                   ]
+               }
 }
