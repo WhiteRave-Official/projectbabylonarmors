@@ -72,7 +72,16 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         PBAGeoArmorBoneBridge boneBridge = (PBAGeoArmorBoneBridge) humanoidModel;
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0, 10000, 0);
-        geoRenderer.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.armorGlint()), 0, 0, 0, 0, 0, 0);
+        if (geoRenderer instanceof PBAGeoArmorRenderer<?> pbaGeoArmorRenderer) {
+            pbaGeoArmorRenderer.setRuntimeFaceCullingSuppressed(true);
+            try {
+                geoRenderer.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.armorGlint()), 0, 0, 0, 0, 0, 0);
+            } finally {
+                pbaGeoArmorRenderer.setRuntimeFaceCullingSuppressed(false);
+            }
+        } else {
+            geoRenderer.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.armorGlint()), 0, 0, 0, 0, 0, 0);
+        }
         boneBridge.prepareForEpicFightBake();
 
         GeoBone headBone = boneBridge.getHeadBone();
@@ -120,6 +129,7 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         bakePartition(poseStack, RIGHT_LEG, rightLegBone, vertices, indices, indexCounter);
         bakePartition(poseStack, LEFT_FEET, leftBootBone, vertices, indices, indexCounter);
         bakePartition(poseStack, RIGHT_FEET, rightBootBone, vertices, indices, indexCounter);
+        PBAArmorFaceCullingHelper.endBakeSession();
 
         boolean empty = vertices.isEmpty();
         if (empty) {            return null;
@@ -162,6 +172,7 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
         }
 
         if (!geoBone.isHidden()) {
+            PBAArmorFaceCullingHelper.setActiveSiblingCubes(geoBone.getCubes());
             for (GeoCube cube : geoBone.getCubes()) {
                 poseStack.pushPose();
                 RenderUtils.translateToPivotPoint(poseStack, cube);
@@ -181,6 +192,7 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
                 partTransformer.bakeCube(poseStack, partDefinition, cube, vertices, indices, indexCounter);
                 poseStack.popPose();
             }
+            PBAArmorFaceCullingHelper.setActiveSiblingCubes(null);
         }
 
         if (!geoBone.isHidingChildren()) {
@@ -208,6 +220,9 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
                              Map<MeshPartDefinition, IntList> indices, PartTransformer.IndexCounter indexCounter) {
             for (GeoQuad quad : cube.quads()) {
                 if (quad == null) {
+                    continue;
+                }
+                if (PBAArmorFaceCullingHelper.shouldCullQuad(partDefinition.partName(), poseStack, cube, quad)) {
                     continue;
                 }
 
@@ -273,6 +288,10 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
             List<AnimatedPolygon> xyClipPolygons = Lists.newArrayList();
 
             for (GeoQuad polygon : cube.quads()) {
+                if (PBAArmorFaceCullingHelper.shouldCullQuad(partDefinition.partName(), poseStack, cube, polygon)) {
+                    continue;
+                }
+
                 Matrix4f matrix = poseStack.last().pose();
 
                 Vertex pos0 = getTranslatedVertex(polygon.vertices()[0], matrix);
@@ -497,6 +516,10 @@ public class PBAGeoEpicFightArmorTransformer extends HumanoidModelTransformer {
             List<AnimatedPolygon> polygons = Lists.newArrayList();
 
             for (GeoQuad quad : cube.quads()) {
+                if (PBAArmorFaceCullingHelper.shouldCullQuad(partDefinition.partName(), poseStack, cube, quad)) {
+                    continue;
+                }
+
                 Matrix4f matrix = poseStack.last().pose();
                 Vertex pos0 = getTranslatedVertex(quad.vertices()[0], matrix);
                 Vertex pos1 = getTranslatedVertex(quad.vertices()[1], matrix);

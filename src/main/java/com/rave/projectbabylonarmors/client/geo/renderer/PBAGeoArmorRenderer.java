@@ -1,16 +1,25 @@
 package com.rave.projectbabylonarmors.client.geo.renderer;
 
-import com.rave.projectbabylonarmors.ProjectBabylonArmors;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.rave.projectbabylonarmors.client.geo.model.PBAFixedGeoArmorModel;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.cache.object.GeoCube;
+import software.bernie.geckolib.cache.object.GeoQuad;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import software.bernie.geckolib.util.RenderUtils;
 
 public abstract class PBAGeoArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> implements PBAGeoArmorBoneBridge {
+    private boolean runtimeFaceCullingSuppressed;
+
     protected PBAGeoArmorRenderer(GeoModel<T> model) {
         super(model);
     }
@@ -81,6 +90,39 @@ public abstract class PBAGeoArmorRenderer<T extends Item & GeoItem> extends GeoA
     }
 
     protected void remapSlotBones() {
+    }
+
+    void setRuntimeFaceCullingSuppressed(boolean suppressed) {
+        this.runtimeFaceCullingSuppressed = suppressed;
+    }
+
+    @Override
+    public void renderCubesOfBone(PoseStack poseStack, GeoBone bone, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        if (bone.isHidden()) {
+            return;
+        }
+
+        String boneName = bone.getName();
+        for (GeoCube cube : bone.getCubes()) {
+            poseStack.pushPose();
+            RenderUtils.translateToPivotPoint(poseStack, cube);
+            RenderUtils.rotateMatrixAroundCube(poseStack, cube);
+            RenderUtils.translateAwayFromPivotPoint(poseStack, cube);
+            Matrix3f normalisedPoseState = poseStack.last().normal();
+            Matrix4f poseState = poseStack.last().pose();
+
+            for (GeoQuad quad : cube.quads()) {
+                if (quad == null || (!this.runtimeFaceCullingSuppressed && PBAGeoArmorRenderCullingHelper.shouldCullQuad(boneName, cube, quad, bone.getCubes()))) {
+                    continue;
+                }
+
+                Vector3f normal = normalisedPoseState.transform(new Vector3f(quad.normal()));
+                RenderUtils.fixInvertedFlatCube(cube, normal);
+                this.createVerticesOfQuad(quad, poseState, normal, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+            }
+
+            poseStack.popPose();
+        }
     }
 
     @Override

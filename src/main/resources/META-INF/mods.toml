@@ -54,6 +54,13 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.project_babylon_armors]]
+modId="epicfight"
+mandatory=true
+versionRange="[20.14.3,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.project_babylon_armors]]
 modId="ldlib"
 mandatory=true
 versionRange="[1.0.50,)"
