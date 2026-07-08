@@ -26,6 +26,13 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.project_babylon_armors]]
+modId="project_babylon_materials"
+mandatory=true
+versionRange="[1.5.0,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.project_babylon_armors]]
 modId="geckolib"
 mandatory=true
 versionRange="[4.5.4.1,)"
@@ -36,6 +43,20 @@ side="BOTH"
 modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.project_babylon_armors]]
+modId="photon"
+mandatory=true
+versionRange="[1.1.17,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.project_babylon_armors]]
+modId="ldlib"
+mandatory=true
+versionRange="[1.0.50,)"
 ordering="NONE"
 side="BOTH"
 

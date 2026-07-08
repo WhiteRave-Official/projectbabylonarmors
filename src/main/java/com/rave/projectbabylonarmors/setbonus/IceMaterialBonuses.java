@@ -2,9 +2,10 @@ package com.rave.projectbabylonarmors.setbonus;
 
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
 import com.rave.projectbabylonmaterials.ProjectBabylonMaterials;
+import com.rave.projectbabylonmaterials.network.PBNetwork;
+import com.rave.projectbabylonmaterials.network.client.ClientboundArmorPhotonEffectPacket;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonus;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
-import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,11 +16,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -32,9 +33,7 @@ public final class IceMaterialBonuses {
     private static final int CHILLED_DURATION_TICKS = 40;
     private static final int CHILLED_AMPLIFIER = 0;
     private static final int AURA_APPLICATION_INTERVAL = 10;
-    private static final int PARTICLE_INTERVAL = 15;
     private static final float DURATION_REDUCTION_MULTIPLIER = 0.70F;
-    private static final int RING_POINTS = 18;
     private static final ResourceLocation CHILLED_EFFECT_ID = ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "chilled");
     private static final ResourceLocation SLOWED_EFFECT_ID = ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "slowed");
     private static final ResourceLocation SLOWNESS_EFFECT_ID = ResourceLocation.fromNamespaceAndPath("minecraft", "slowness");
@@ -57,12 +56,14 @@ public final class IceMaterialBonuses {
         @SubscribeEvent
         public static void onLivingTick(LivingEvent.LivingTickEvent event) {
             LivingEntity wearer = event.getEntity();
-            if (wearer.level().isClientSide() || !hasIceSet(wearer)) {
+            if (wearer.level().isClientSide()) {
                 return;
             }
 
-            if (wearer.tickCount % PARTICLE_INTERVAL == 0) {
-                spawnAuraParticles(wearer);
+            boolean hasSet = hasIceSet(wearer);
+            updateAuraVisual(wearer, hasSet);
+            if (!hasSet) {
+                return;
             }
 
             if (wearer.tickCount % AURA_APPLICATION_INTERVAL == 0) {
@@ -166,26 +167,22 @@ public final class IceMaterialBonuses {
                     || SLOWNESS_EFFECT_ID.equals(effectId)
                     || FROZEN_EFFECT_ID.equals(effectId);
         }
-
-        private static void spawnAuraParticles(LivingEntity wearer) {
-            if (!(wearer.level() instanceof ServerLevel serverLevel)) {
+        private static void updateAuraVisual(LivingEntity wearer, boolean active) {
+            String tag = "project_babylon_armors.ice_aura_visual_active";
+            boolean wasActive = wearer.getPersistentData().getBoolean(tag);
+            if (active == wasActive && (!active || wearer.tickCount % 40 != 0)) {
                 return;
             }
 
-            double centerX = wearer.getX();
-            double centerY = wearer.getY() + 0.05D;
-            double centerZ = wearer.getZ();
-
-            for (int i = 0; i < RING_POINTS; i++) {
-                double angle = (Math.PI * 2.0D * i) / RING_POINTS;
-                double x = centerX + Math.cos(angle) * AURA_RADIUS;
-                double z = centerZ + Math.sin(angle) * AURA_RADIUS;
-                serverLevel.sendParticles(ParticleHelper.SNOWFLAKE, x, centerY, z, 1, 0.03D, 0.01D, 0.03D, 0.0D);
-                serverLevel.sendParticles(ParticleHelper.SNOW_DUST, x, centerY, z, 1, 0.02D, 0.005D, 0.02D, 0.0D);
+            wearer.getPersistentData().putBoolean(tag, active);
+            if (!(wearer.level() instanceof ServerLevel)) {
+                return;
             }
 
-            Vec3 center = new Vec3(centerX, centerY, centerZ);
-            serverLevel.sendParticles(ParticleHelper.SNOW_DUST, center.x, center.y, center.z, 6, 0.2D, 0.01D, 0.2D, 0.0D);
+            PBNetwork.CHANNEL.send(
+                    PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> wearer),
+                    new ClientboundArmorPhotonEffectPacket(wearer.getId(), ClientboundArmorPhotonEffectPacket.ICE_AURA, active, (float) AURA_RADIUS)
+            );
         }
     }
 

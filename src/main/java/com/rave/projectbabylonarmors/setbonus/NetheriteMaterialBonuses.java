@@ -3,10 +3,11 @@ package com.rave.projectbabylonarmors.setbonus;
 import com.rave.projectbabylonarmors.ProjectBabylonArmors;
 import com.rave.projectbabylonmaterials.ProjectBabylonMaterials;
 import com.rave.projectbabylonmaterials.combat.MagicArmorCalculationHelper;
+import com.rave.projectbabylonmaterials.network.PBNetwork;
+import com.rave.projectbabylonmaterials.network.client.ClientboundArmorPhotonEffectPacket;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonus;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -18,12 +19,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -35,12 +36,10 @@ public final class NetheriteMaterialBonuses {
     private static final double AURA_RADIUS = 2.0D;
     private static final int RING_DURATION_TICKS = 40;
     private static final int RING_APPLICATION_INTERVAL = 10;
-    private static final int PARTICLE_INTERVAL = 5;
     private static final float RING_TRIGGER_CHANCE = 0.10F;
     private static final float BONUS_DAMAGE_MULTIPLIER = 1.15F;
     private static final float RING_FIRE_DAMAGE = 2.0F;
     private static final int BURN_DURATION_SECONDS = 5;
-    private static final int RING_POINTS = 20;
     private static final UUID KNOCKBACK_IMMUNITY_UUID = UUID.nameUUIDFromBytes("netherite_material.knockback_immunity".getBytes(StandardCharsets.UTF_8));
     private static final String KNOCKBACK_IMMUNITY_NAME = "project_babylon_armors.netherite_material_knockback_immunity";
     private static final Map<UUID, Integer> ACTIVE_FIRE_RINGS = new ConcurrentHashMap<>();
@@ -80,6 +79,7 @@ public final class NetheriteMaterialBonuses {
             LivingEntity target = event.getEntity();
             if (hasNetheriteSet(target) && target.getRandom().nextFloat() < RING_TRIGGER_CHANCE) {
                 ACTIVE_FIRE_RINGS.put(target.getUUID(), target.tickCount + RING_DURATION_TICKS);
+                sendFireRingState(target, true);
             }
 
             if (target.isOnFire() && event.getSource().getEntity() instanceof LivingEntity attacker && hasNetheriteSet(attacker)) {
@@ -105,11 +105,8 @@ public final class NetheriteMaterialBonuses {
 
             if (!hasNetheriteSet(wearer) || wearer.tickCount > ringEndTick) {
                 ACTIVE_FIRE_RINGS.remove(wearer.getUUID());
+                sendFireRingState(wearer, false);
                 return;
-            }
-
-            if (wearer.tickCount % PARTICLE_INTERVAL == 0) {
-                spawnRingParticles(wearer);
             }
 
             if (wearer.tickCount % RING_APPLICATION_INTERVAL == 0) {
@@ -160,28 +157,15 @@ public final class NetheriteMaterialBonuses {
 
             return true;
         }
-
-        private static void spawnRingParticles(LivingEntity wearer) {
-            if (!(wearer.level() instanceof ServerLevel serverLevel)) {
+        private static void sendFireRingState(LivingEntity wearer, boolean active) {
+            if (!(wearer.level() instanceof ServerLevel)) {
                 return;
             }
 
-            double centerX = wearer.getX();
-            double centerY = wearer.getY() + 0.05D;
-            double centerZ = wearer.getZ();
-
-            for (int i = 0; i < RING_POINTS; i++) {
-                double angle = (Math.PI * 2.0D * i) / RING_POINTS;
-                double x = centerX + Math.cos(angle) * AURA_RADIUS;
-                double z = centerZ + Math.sin(angle) * AURA_RADIUS;
-                serverLevel.sendParticles(ParticleTypes.FLAME, x, centerY, z, 2, 0.01D, 0.02D, 0.01D, 0.0D);
-                serverLevel.sendParticles(ParticleTypes.SMOKE, x, centerY + 0.02D, z, 1, 0.01D, 0.01D, 0.01D, 0.0D);
-            }
-
-            Vec3 center = new Vec3(centerX, centerY, centerZ);
-            serverLevel.sendParticles(ParticleTypes.FLAME, center.x, center.y, center.z, 8, 0.2D, 0.02D, 0.2D, 0.0D);
-            serverLevel.sendParticles(ParticleTypes.LAVA, center.x, center.y + 0.02D, center.z, 4, 0.15D, 0.02D, 0.15D, 0.0D);
-            serverLevel.sendParticles(ParticleTypes.SMOKE, center.x, center.y + 0.03D, center.z, 6, 0.18D, 0.02D, 0.18D, 0.0D);
+            PBNetwork.CHANNEL.send(
+                    PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> wearer),
+                    new ClientboundArmorPhotonEffectPacket(wearer.getId(), ClientboundArmorPhotonEffectPacket.NETHERITE_FIRE_RING, active, (float) AURA_RADIUS)
+            );
         }
     }
 

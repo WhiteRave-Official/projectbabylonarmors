@@ -4,11 +4,11 @@ import com.rave.projectbabylonarmors.ProjectBabylonArmors;
 import com.rave.projectbabylonarmors.init.PBArmorEffects;
 import com.rave.projectbabylonmaterials.ProjectBabylonMaterials;
 import com.rave.projectbabylonmaterials.network.PBNetwork;
+import com.rave.projectbabylonmaterials.network.client.ClientboundArmorPhotonEffectPacket;
 import com.rave.projectbabylonmaterials.network.client.ClientboundDragonsteelCooldownPacket;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonus;
 import com.rave.projectbabylonmaterials.setbonus.ArmorSetBonusType;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -277,19 +277,10 @@ public final class DragonsteelMaterialBonuses {
             double centerY = entity.getY() + 0.85D;
             double centerZ = entity.getZ();
 
-            for (int i = 0; i < ENDER_WAVE_POINTS; i++) {
-                double angle = (Math.PI * 2.0D * i) / ENDER_WAVE_POINTS;
-                double x = centerX + Math.cos(angle) * ENDER_WAVE_RADIUS;
-                double z = centerZ + Math.sin(angle) * ENDER_WAVE_RADIUS;
-                double velocityX = Math.cos(angle) * 0.18D;
-                double velocityZ = Math.sin(angle) * 0.18D;
-
-                serverLevel.sendParticles(ParticleTypes.PORTAL, x, centerY, z, 3, velocityX, 0.02D, velocityZ, 0.0D);
-                serverLevel.sendParticles(ParticleTypes.DRAGON_BREATH, x, centerY + 0.05D, z, 2, velocityX * 0.5D, 0.01D, velocityZ * 0.5D, 0.0D);
-            }
-
-            serverLevel.sendParticles(ParticleTypes.PORTAL, centerX, centerY, centerZ, 40, 0.5D, 0.8D, 0.5D, 0.1D);
-            serverLevel.sendParticles(ParticleTypes.DRAGON_BREATH, centerX, centerY + 0.1D, centerZ, 25, 0.45D, 0.35D, 0.45D, 0.03D);
+            PBNetwork.CHANNEL.send(
+                    PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity),
+                    new ClientboundArmorPhotonEffectPacket(entity.getId(), ClientboundArmorPhotonEffectPacket.DRAGONSTEEL_REBIRTH, true, (float) ENDER_WAVE_RADIUS)
+            );
             serverLevel.playSound(null, centerX, entity.getY(), centerZ, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 1.0F, 1.0F);
             if (teleported) {
                 serverLevel.playSound(null, centerX, entity.getY(), centerZ, SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
