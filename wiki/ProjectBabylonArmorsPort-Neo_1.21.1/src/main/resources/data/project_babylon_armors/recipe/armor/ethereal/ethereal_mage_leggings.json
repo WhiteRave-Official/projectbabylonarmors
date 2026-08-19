@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "project_babylon_materials:ethereal_cloth"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "C C",
+    "C C"
+  ],
+  "result": {
+    "id": "project_babylon_armors:ethereal_mage_leggings"
+  },
+  "show_notification": true
+}

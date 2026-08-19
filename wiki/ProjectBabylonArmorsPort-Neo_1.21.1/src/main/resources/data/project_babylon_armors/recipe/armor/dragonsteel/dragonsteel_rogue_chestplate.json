@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "project_babylon_materials:dragonsteel_cloth"
+    },
+    "P": {
+      "item": "project_babylon_materials:dragonsteel_plate"
+    }
+  },
+  "pattern": [
+    "P P",
+    "CPC",
+    "CCC"
+  ],
+  "result": {
+    "id": "project_babylon_armors:dragonsteel_rogue_chestplate"
+  },
+  "show_notification": true
+}
