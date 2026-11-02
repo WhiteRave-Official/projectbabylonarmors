@@ -227,15 +227,16 @@ tasks.named('jar', Jar).configure {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            groupId = project.group.toString()
+            artifactId = 'projectbabylonarmors'
+            version = project.version.toString()
             artifact jar
         }
     }
     repositories {
         maven {
-            url = uri("../projectbabylonmaterials/mcmodsrepo")
-        }
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            name = 'projectLocal'
+            url = uri("${projectDir}/mcmodsrepo")
         }
     }
 }

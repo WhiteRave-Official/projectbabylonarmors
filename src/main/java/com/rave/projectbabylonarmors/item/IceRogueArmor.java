@@ -108,7 +108,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem implements G
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ice_assasin_helmet.png";
+            return "project_babylon_armors:textures/entities/ice_rogue_helmet.png";
         }
     }
 
@@ -130,7 +130,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem implements G
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ice_assasin_leggings.png";
+            return "project_babylon_armors:textures/entities/ice_rogue_leggings.png";
         }
     }
 
@@ -141,7 +141,7 @@ public abstract class IceRogueArmor extends ProjectBabylonArmorItem implements G
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/ice_assasin_boots.png";
+            return "project_babylon_armors:textures/entities/ice_rogue_boots.png";
         }
     }
 }
