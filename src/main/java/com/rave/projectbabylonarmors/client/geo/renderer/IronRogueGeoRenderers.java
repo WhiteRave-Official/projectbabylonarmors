@@ -13,25 +13,25 @@ public final class IronRogueGeoRenderers {
     private static final PBAGeoArmorSetDefinition DEFINITION = PBAGeoArmorSetDefinition.builder()
         .helmet(HELMET_ID, () -> configuredRenderer(
             "geo/iron_rogue_helmet.geo.json",
-            "textures/entities/iron_assasin_helmet.png",
+            "textures/entities/iron_rogue_helmet.png",
             PBAGeoArmorSetDefinition.SlotMode.DEFAULT,
             PBAGeoArmorSetDefinition.ChestMode.DEFAULT
         ))
         .chestplate(CHESTPLATE_ID, () -> configuredRenderer(
             "geo/iron_rogue_chestplate.geo.json",
-            "textures/entities/iron_assasin_chestplate.png",
+            "textures/entities/iron_rogue_chestplate.png",
             PBAGeoArmorSetDefinition.SlotMode.DEFAULT,
             PBAGeoArmorSetDefinition.ChestMode.RIGID_CHEST
         ), PBAGeoArmorSetDefinition.ChestMode.RIGID_CHEST)
         .leggings(LEGGINGS_ID, () -> configuredRenderer(
             "geo/iron_rogue_leggings.geo.json",
-            "textures/entities/iron_assasin_leggings.png",
+            "textures/entities/iron_rogue_leggings.png",
             PBAGeoArmorSetDefinition.SlotMode.LEGGINGS,
             PBAGeoArmorSetDefinition.ChestMode.DEFAULT
         ))
         .boots(BOOTS_ID, () -> configuredRenderer(
             "geo/iron_rogue_boots.geo.json",
-            "textures/entities/iron_assasin_boots.png",
+            "textures/entities/iron_rogue_boots.png",
             PBAGeoArmorSetDefinition.SlotMode.BOOTS,
             PBAGeoArmorSetDefinition.ChestMode.DEFAULT
         ))

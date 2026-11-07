@@ -108,7 +108,7 @@ public abstract class IronRogueArmor extends ProjectBabylonArmorItem implements 
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/iron_assasin_helmet.png";
+            return "project_babylon_armors:textures/entities/iron_rogue_helmet.png";
         }
     }
 
@@ -119,7 +119,7 @@ public abstract class IronRogueArmor extends ProjectBabylonArmorItem implements 
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/iron_assasin_chestplate.png";
+            return "project_babylon_armors:textures/entities/iron_rogue_chestplate.png";
         }
     }
 
@@ -130,7 +130,7 @@ public abstract class IronRogueArmor extends ProjectBabylonArmorItem implements 
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/iron_assasin_leggings.png";
+            return "project_babylon_armors:textures/entities/iron_rogue_leggings.png";
         }
     }
 
@@ -141,7 +141,7 @@ public abstract class IronRogueArmor extends ProjectBabylonArmorItem implements 
 
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "project_babylon_armors:textures/entities/iron_assasin_boots.png";
+            return "project_babylon_armors:textures/entities/iron_rogue_boots.png";
         }
     }
 }
